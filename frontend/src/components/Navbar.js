@@ -44,7 +44,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <Link to='/' className='header__link'>
+        <Link to='/orders' className='header__link'>
           <div className='header__option'>
             <span className='header__optionTop'>Returns</span>
             <span className='header__optionBottom'>& Orders</span>
