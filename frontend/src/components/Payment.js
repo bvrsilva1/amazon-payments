@@ -7,6 +7,7 @@ import { useStateValue } from '../state/StateProvider'
 import CheckoutProduct from './CheckoutProduct'
 import { Link, useHistory } from 'react-router-dom'
 import { getBasketTotal } from '../state/reducer'
+import { db } from '../config/firebase'
 
 const Payment = () => {
   const [{ basket, user }, dispatch] = useStateValue()
@@ -32,8 +33,6 @@ const Payment = () => {
     getClientSecret()
   }, [basket])
 
-  console.log('SECRET', clientSecret)
-
   const handleSubmit = async (event) => {
     //call stripe
     event.preventDefault() //prevent from refreshing
@@ -46,9 +45,22 @@ const Payment = () => {
         },
       })
       .then(({ paymentIntent }) => {
+        db.collection('users')
+          .doc(user?.uid)
+          .collection('orders')
+          .doc(paymentIntent.id)
+          .set({
+            basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          })
+
         setSucceeded(true)
         setError(null)
         setProcessing(false)
+
+        dispatch({ type: 'EMPTY_BASKET' })
+
         history.replace('/orders')
       })
   }

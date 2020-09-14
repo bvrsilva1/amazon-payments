@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import './Navbar.css'
 import { useStateValue } from '../state/StateProvider'
-import { auth } from '../firebase/firebase'
+import { auth } from '../config/firebase'
 
 const Navbar = () => {
   //      state,          dispatch
