@@ -7,10 +7,11 @@ import { getBasketTotal } from '../state/reducer'
 
 const Subtotal = () => {
   const history = useHistory()
-  const [{ basket }, dispatch] = useStateValue()
+  const [{ basket, user }, dispatch] = useStateValue()
 
   const handleHistory = () => {
-    history.push('/payment')
+    if (user) history.push('/payment')
+    else history.push('/login')
   }
 
   return (
